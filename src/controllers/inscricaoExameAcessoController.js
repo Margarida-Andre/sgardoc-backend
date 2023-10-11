@@ -1,3 +1,4 @@
+const InscricaoExameAcesso = require("../models/InscricaoExameAcesso");
 const Inscricao = require("../models/InscricaoExameAcesso");
 const { Op } = require("@sequelize/core");
 
@@ -150,6 +151,124 @@ module.exports = {
         inscricaoCreate,
         message: "Inscrição feita com sucesso",
       });
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async updateInscricao(req, res) {
+    try {
+      const { id } = req.params;
+      const {
+        provinciaId,
+        municipioId,
+        estadoCivilId,
+        generoId,
+        opcao1CursoId,
+        opcao2CursoId,
+        estadoId,
+        nome,
+        email,
+        dataNascimento,
+        numeroBi,
+        dataEmissaoBi,
+        validadeBi,
+        arquivoIdentificacao,
+        carregamentoBi,
+        certificadoEnsinoMedio,
+        carregamentoFotografia,
+        comprovativoPagamento,
+        telefonePrincipal,
+        telefoneAlternativo,
+        nomePai,
+        nomeMae,
+        criadoPor,
+        actualizadoPor,
+      } = req.body;
+
+      const contactoEmail = await InscricaoExameAcesso.findOne({
+        where: { id: { [Op.ne]: req.params.id }, email },
+      });
+      if (contactoEmail != null) {
+        return res.status(400).json({ message: "Este email já existe" });
+      }
+
+      const numeroBI = await InscricaoExameAcesso.findOne({
+        where: { id: { [Op.ne]: req.params.id }, numeroBi },
+      });
+      if (numeroBI != null) {
+        return res
+          .status(400)
+          .json({ message: "Este número do Bilhete de Identidade já existe" });
+      }
+
+      const contactoPrincipal = await InscricaoExameAcesso.findOne({
+        where: { id: { [Op.ne]: req.params.id }, telefonePrincipal },
+      });
+      if (contactoPrincipal != null) {
+        return res
+          .status(400)
+          .json({ message: "O número de telefone principal já existe" });
+      }
+
+      const contactoAlternativo = await InscricaoExameAcesso.findOne({
+        where: { id: { [Op.ne]: req.params.id }, telefoneAlternativo },
+      });
+      if (contactoAlternativo != null) {
+        return res
+          .status(400)
+          .json({ message: "O número de telefone alternativo já existe" });
+      }
+
+      const inscricaoUpdate = await InscricaoExameAcesso.update(
+        {
+          provinciaId,
+          municipioId,
+          estadoCivilId,
+          generoId,
+          opcao1CursoId,
+          opcao2CursoId,
+          estadoId,
+          nome,
+          email,
+          dataNascimento,
+          numeroBi,
+          dataEmissaoBi,
+          validadeBi,
+          arquivoIdentificacao,
+          carregamentoBi,
+          certificadoEnsinoMedio,
+          carregamentoFotografia,
+          comprovativoPagamento,
+          telefonePrincipal,
+          telefoneAlternativo,
+          nomePai,
+          nomeMae,
+          criadoPor,
+          actualizadoPor,
+        },
+        { where: { id } }
+      );
+
+      return res.json({
+        inscricaoUpdate,
+        message: "Inscrição actualizada com sucesso",
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async deleteInscricao(req, res) {
+    try {
+      const { id } = req.params;
+      const inscricaoDelete = await InscricaoExameAcesso.destroy({
+        where: { id },
+      });
+      if (!inscricaoDelete) {
+        return res.json({ message: "Esta inscrição não existe" });
+      }
+      return res.json({ message: "Inscrição excluída com sucesso" });
     } catch (error) {
       res.json(error);
     }

@@ -179,6 +179,16 @@ routes.get(
   InscricaoExameAcessoController.getInscricoesRejeitadas
 );
 routes.post("/inscricaoCreate", InscricaoExameAcessoController.createInscricao);
+routes.patch(
+  "/inscricaoUpdate/:id",
+  authUsuario,
+  InscricaoExameAcessoController.updateInscricao
+);
+routes.delete(
+  "/inscricaoDelete/:id",
+  authUsuario,
+  InscricaoExameAcessoController.deleteInscricao
+);
 
 //matricula
 routes.get("/matriculaAll", authUsuario, MatriculaController.getMatriculas);
@@ -218,6 +228,11 @@ routes.post(
   "/estudanteCreate/:matriculaId",
   authUsuario,
   EstudanteController.createEstudante
+);
+routes.patch(
+  "/estudanteUpdate/:id",
+  authUsuario,
+  EstudanteController.updateEstudante
 );
 routes.delete(
   "/estudanteDelete/:id",

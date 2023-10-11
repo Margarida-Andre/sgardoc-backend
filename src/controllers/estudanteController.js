@@ -75,8 +75,6 @@ module.exports = {
         ],
       });
 
-      const getEstudantes = await Estudante.findAll();
-
       let date_ob = new Date();
 
       document.rect(25, 30, 170, 45);
@@ -156,6 +154,56 @@ module.exports = {
       });
     } catch (error) {
       return res.json(error);
+    }
+  },
+
+  async updateEstudante(req, res) {
+    try {
+      const { id } = req.params;
+      const {
+        matriculaId,
+        usuarioId,
+        cursoId,
+        grauAcademicoId,
+        turmaId,
+        turnoId,
+        numeroProcesso,
+        descricao,
+        criadoPor,
+        actualizadoPor,
+      } = req.body;
+
+      const numProcesso = await Estudante.findOne({
+        where: { id: { [Op.ne]: req.params.id }, numeroProcesso },
+      });
+      if (numProcesso != null) {
+        return res
+          .status(400)
+          .json({ message: "Este número de processo já existe" });
+      }
+
+      const estudanteUpdate = await Estudante.update(
+        {
+          matriculaId,
+          usuarioId,
+          cursoId,
+          grauAcademicoId,
+          turmaId,
+          turnoId,
+          numeroProcesso,
+          descricao,
+          criadoPor,
+          actualizadoPor,
+        },
+        { where: { id } }
+      );
+
+      return res.json({
+        estudanteUpdate,
+        message: "Estudante actualizado (a) com sucesso",
+      });
+    } catch (error) {
+      res.json(error);
     }
   },
 
