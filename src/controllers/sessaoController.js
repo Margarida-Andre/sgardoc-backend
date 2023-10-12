@@ -23,11 +23,13 @@ module.exports = {
         return res.status(400).json({ error: "Senha incorrecta" });
       }
 
-      const token = sign({ id: usuario.id }, process.env.SECRET_JWT, {
-        expiresIn: 3600,
-      });
+      const token = sign(
+        { id: usuario.id },
+        process.env.SECRET_JWT
+        // { expiresIn: 3600 }
+      );
 
-      return res.json({ auth: true, token: token });
+      return res.json({ auth: true, token: token, usuario: usuario.nome });
     } catch (error) {
       res.json(error);
     }
