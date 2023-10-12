@@ -2,13 +2,28 @@ const Curso = require("../models/Curso");
 const { Op } = require("@sequelize/core");
 
 module.exports = {
-  async getCurso(req, res) {
+  async getCursos(req, res) {
     try {
       const curso = await Curso.findAll({
         order: [["createdAt", "DESC"]],
       });
       if (curso == 0) {
         return res.status(400).json({ message: "Não existe nenhum curso" });
+      }
+      return res.json(curso);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async getCurso(req, res) {
+    try {
+      const { id } = req.params;
+      const curso = await Curso.findOne({
+        where: { id },
+      });
+      if (curso == 0) {
+        return res.status(400).json({ message: "Este curso não existe" });
       }
       return res.json(curso);
     } catch (error) {

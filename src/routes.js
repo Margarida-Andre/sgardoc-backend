@@ -36,6 +36,7 @@ routes.post(
   authUsuario,
   UsuarioController.createUsuario
 );
+routes.get("/usuario/:id", authUsuario, UsuarioController.getUsuario);
 routes.delete(
   "/usuarioDelete/:id",
   authUsuario,
@@ -96,7 +97,8 @@ routes.get("/estadoCivilAll", EstadoCivilController.getEstadoCivil);
 routes.get("/estadoAll", authUsuario, EstadoController.getEstado);
 
 //curso
-routes.get("/cursoAll", CursoController.getCurso);
+routes.get("/cursoAll", CursoController.getCursos);
+routes.get("/curso/:id", CursoController.getCurso);
 routes.post("/cursoCreate", authUsuario, CursoController.createCurso);
 routes.patch("/cursoUpdate/:id", authUsuario, CursoController.updateCurso);
 routes.delete("/cursoDelete/:id", authUsuario, CursoController.deleteCurso);
@@ -153,6 +155,7 @@ routes.get(
   authUsuario,
   TurmaController.getTurmasByAnoLectivo
 );
+routes.get("/turma/:id", authUsuario, TurmaController.getTurma);
 routes.post("/turmaCreate", authUsuario, TurmaController.createTurma);
 routes.delete("/turmaDelete/:id", authUsuario, TurmaController.deleteTurma);
 routes.patch("/turmaUpdate/:id", authUsuario, TurmaController.updateTurma);
@@ -177,6 +180,11 @@ routes.get(
   "/inscricoesRejeitadas",
   authUsuario,
   InscricaoExameAcessoController.getInscricoesRejeitadas
+);
+routes.get(
+  "/inscricao/:id",
+  authUsuario,
+  InscricaoExameAcessoController.getInscricao
 );
 routes.post("/inscricaoCreate", InscricaoExameAcessoController.createInscricao);
 routes.patch(
@@ -207,6 +215,7 @@ routes.get(
   authUsuario,
   MatriculaController.getMatriculasRejeitadas
 );
+routes.get("/matricula/:id", authUsuario, MatriculaController.getMatricula);
 routes.post(
   "/matriculaCreate/:inscricaoExameAcessoId",
   MatriculaController.createMatricula
@@ -224,6 +233,7 @@ routes.patch(
 
 //estudante
 routes.get("/estudanteAll", authUsuario, EstudanteController.getEstudantes);
+routes.get("/estudante/:id", authUsuario, EstudanteController.getEstudante);
 routes.post(
   "/estudanteCreate/:matriculaId",
   authUsuario,
@@ -261,6 +271,11 @@ routes.get(
   authUsuario,
   SolicitacaoHistoricoNotasController.getHNRejeitadas
 );
+routes.get(
+  "/historicoNotas/:id",
+  authUsuario,
+  SolicitacaoHistoricoNotasController.getHistoricoNotas
+);
 routes.post(
   "/solicitacaohnCreate",
   authUsuario,
@@ -297,6 +312,11 @@ routes.get(
   "/reqRejeitados",
   authUsuario,
   SolicitacaoRequerimentoController.getReqRejeitados
+);
+routes.get(
+  "/requerimento/:id",
+  authUsuario,
+  SolicitacaoRequerimentoController.getRequerimento
 );
 routes.post(
   "/reqCreate",

@@ -21,6 +21,21 @@ module.exports = {
     }
   },
 
+  async getEstudante(req, res) {
+    try {
+      const { id } = req.params;
+      const estudante = await Inscricao.findOne({
+        where: { id },
+      });
+      if (estudante == 0) {
+        return res.status(400).json({ message: "Este estudante não existe" });
+      }
+      return res.json(estudante);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createEstudante(req, res) {
     try {
       const { matriculaId } = req.params;

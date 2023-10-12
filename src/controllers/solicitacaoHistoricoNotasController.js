@@ -77,6 +77,23 @@ module.exports = {
     }
   },
 
+  async getHistoricoNotas(req, res) {
+    try {
+      const { id } = req.params;
+      const historicoNotas = await SolicitacaoHistoricoNotas.findOne({
+        where: { id },
+      });
+      if (historicoNotas == 0) {
+        return res
+          .status(400)
+          .json({ message: "Este histórico com notas não existe" });
+      }
+      return res.json(historicoNotas);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createSolicitacao(req, res) {
     try {
       const {

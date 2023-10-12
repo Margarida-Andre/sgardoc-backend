@@ -72,6 +72,23 @@ module.exports = {
     }
   },
 
+  async getRequerimento(req, res) {
+    try {
+      const { id } = req.params;
+      const requerimento = await SolicitacaoRequerimento.findOne({
+        where: { id },
+      });
+      if (requerimento == 0) {
+        return res
+          .status(400)
+          .json({ message: "Este requerimento não existe" });
+      }
+      return res.json(requerimento);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createSolicitacao(req, res) {
     try {
       const {
