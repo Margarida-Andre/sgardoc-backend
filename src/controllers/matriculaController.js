@@ -57,6 +57,21 @@ module.exports = {
     }
   },
 
+  async getMatricula(req, res) {
+    try {
+      const { id } = req.params;
+      const matricula = await Usuario.findOne({
+        where: { id },
+      });
+      if (matricula == 0) {
+        return res.status(400).json({ message: "Esta matrícula não existe" });
+      }
+      return res.json(matricula);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createMatricula(req, res) {
     try {
       const { inscricaoExameAcessoId } = req.params;

@@ -1,4 +1,3 @@
-const InscricaoExameAcesso = require("../models/InscricaoExameAcesso");
 const Inscricao = require("../models/InscricaoExameAcesso");
 const { Op } = require("@sequelize/core");
 
@@ -52,7 +51,22 @@ module.exports = {
           .status(400)
           .json({ message: "Não existe nenhuma inscrição de exame de acesso" });
       }
-      return res.json(inscricaAll);
+      return res.json(inscricaoAll);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async getInscricao(req, res) {
+    try {
+      const { id } = req.params;
+      const inscricao = await Inscricao.findOne({
+        where: { id },
+      });
+      if (inscricao == 0) {
+        return res.status(400).json({ message: "Esta inscrição não existe" });
+      }
+      return res.json(inscricao);
     } catch (error) {
       res.json(error);
     }
@@ -186,7 +200,7 @@ module.exports = {
         actualizadoPor,
       } = req.body;
 
-      const contactoEmail = await InscricaoExameAcesso.findOne({
+      const contactoEmail = await Inscricao.findOne({
         where: { id: { [Op.ne]: req.params.id }, email },
       });
       if (contactoEmail != null) {
@@ -262,7 +276,7 @@ module.exports = {
   async deleteInscricao(req, res) {
     try {
       const { id } = req.params;
-      const inscricaoDelete = await InscricaoExameAcesso.destroy({
+      const inscricaoDelete = await Inscricao.destroy({
         where: { id },
       });
       if (!inscricaoDelete) {

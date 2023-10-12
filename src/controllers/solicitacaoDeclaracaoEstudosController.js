@@ -77,6 +77,21 @@ module.exports = {
     }
   },
 
+  async getDeclaracaoEstudos(req, res) {
+    try {
+      const { id } = req.params;
+      const declaracao = await SolicitacaoDeclaracaoEstudos.findOne({
+        where: { id },
+      });
+      if (declaracao == 0) {
+        return res.status(400).json({ message: "Esta declaração não existe" });
+      }
+      return res.json(declaracao);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createSolicitacao(req, res) {
     try {
       const {

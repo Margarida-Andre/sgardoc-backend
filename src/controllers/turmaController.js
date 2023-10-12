@@ -111,6 +111,21 @@ module.exports = {
     }
   },
 
+  async getTurma(req, res) {
+    try {
+      const { id } = req.params;
+      const turma = await Turma.findOne({
+        where: { id },
+      });
+      if (turma == 0) {
+        return res.status(400).json({ message: "Esta turma não existe" });
+      }
+      return res.json(turma);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createTurma(req, res) {
     try {
       const {

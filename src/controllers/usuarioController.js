@@ -18,6 +18,21 @@ module.exports = {
     }
   },
 
+  async getUsuario(req, res) {
+    try {
+      const { id } = req.params;
+      const usuario = await Usuario.findOne({
+        where: { id },
+      });
+      if (usuario == 0) {
+        return res.status(400).json({ message: "Este usuário não existe" });
+      }
+      return res.json(usuario);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   async createUsuario(req, res) {
     try {
       const { categoriaId } = req.params;
@@ -104,7 +119,10 @@ module.exports = {
         },
         { where: { id } }
       );
-      return res.json({usuarioUpdate, message: "Usuário actualizado com sucesso" });
+      return res.json({
+        usuarioUpdate,
+        message: "Usuário actualizado com sucesso",
+      });
     } catch (error) {
       res.json(error);
     }
