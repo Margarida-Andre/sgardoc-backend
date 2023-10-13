@@ -207,7 +207,7 @@ module.exports = {
         return res.status(400).json({ message: "Este email já existe" });
       }
 
-      const numeroBI = await InscricaoExameAcesso.findOne({
+      const numeroBI = await Inscricao.findOne({
         where: { id: { [Op.ne]: req.params.id }, numeroBi },
       });
       if (numeroBI != null) {
@@ -216,7 +216,7 @@ module.exports = {
           .json({ message: "Este número do Bilhete de Identidade já existe" });
       }
 
-      const contactoPrincipal = await InscricaoExameAcesso.findOne({
+      const contactoPrincipal = await Inscricao.findOne({
         where: { id: { [Op.ne]: req.params.id }, telefonePrincipal },
       });
       if (contactoPrincipal != null) {
@@ -225,7 +225,7 @@ module.exports = {
           .json({ message: "O número de telefone principal já existe" });
       }
 
-      const contactoAlternativo = await InscricaoExameAcesso.findOne({
+      const contactoAlternativo = await Inscricao.findOne({
         where: { id: { [Op.ne]: req.params.id }, telefoneAlternativo },
       });
       if (contactoAlternativo != null) {
@@ -234,7 +234,7 @@ module.exports = {
           .json({ message: "O número de telefone alternativo já existe" });
       }
 
-      const inscricaoUpdate = await InscricaoExameAcesso.update(
+      const inscricaoUpdate = await Inscricao.update(
         {
           provinciaId,
           municipioId,
