@@ -8,7 +8,7 @@ module.exports = {
     try {
       const reqPendentes = await SolicitacaoRequerimento.findAll({
         where: { estadoId: 1 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (reqPendentes == 0) {
         return res.status(400).json({
@@ -25,7 +25,7 @@ module.exports = {
     try {
       const reqAprovados = await SolicitacaoRequerimento.findAll({
         where: { estadoId: 2 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (reqAprovados == 0) {
         return res.status(400).json({
@@ -43,7 +43,7 @@ module.exports = {
     try {
       const reqRejeitados = await SolicitacaoRequerimento.findAll({
         where: { estadoId: 3 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (reqRejeitados == 0) {
         return res.status(400).json({
