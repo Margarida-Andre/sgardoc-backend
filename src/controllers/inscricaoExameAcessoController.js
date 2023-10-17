@@ -6,7 +6,7 @@ module.exports = {
     try {
       const inscricoesPendentes = await Inscricao.findAll({
         where: { estadoId: 1 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(inscricoesPendentes);
@@ -19,7 +19,7 @@ module.exports = {
     try {
       const inscricoesAprovadas = await Inscricao.findAll({
         where: { estadoId: 2 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(inscricoesAprovadas);
@@ -32,7 +32,7 @@ module.exports = {
     try {
       const inscricoesRejeitadas = await Inscricao.findAll({
         where: { estadoId: 3 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(inscricoesRejeitadas);
@@ -44,7 +44,7 @@ module.exports = {
   async getInscricoes(req, res) {
     try {
       const inscricaoAll = await Inscricao.findAll({
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (inscricaoAll == 0) {
         return res

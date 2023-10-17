@@ -6,7 +6,7 @@ module.exports = {
     try {
       const matriculasPendentes = await Matricula.findAll({
         where: { estadoId: 1 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(matriculasPendentes);
@@ -19,7 +19,7 @@ module.exports = {
     try {
       const matriculasAprovadas = await Matricula.findAll({
         where: { estadoId: 2 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(matriculasAprovadas);
@@ -32,7 +32,7 @@ module.exports = {
     try {
       const matriculasRejeitadas = await Matricula.findAll({
         where: { estadoId: 3 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
 
       return res.json(matriculasRejeitadas);
@@ -44,7 +44,7 @@ module.exports = {
   async getMatriculas(req, res) {
     try {
       const matriculaAll = await Matricula.findAll({
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (matriculaAll == 0) {
         return res

@@ -10,7 +10,7 @@ module.exports = {
     try {
       const hnPendentes = await SolicitacaoHistoricoNotas.findAll({
         where: { estadoId: 1 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (hnPendentes == 0) {
         return res.status(400).json({
@@ -28,7 +28,7 @@ module.exports = {
     try {
       const hnAprovadas = await SolicitacaoHistoricoNotas.findAll({
         where: { estadoId: 2 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (hnAprovadas == 0) {
         return res.status(400).json({
@@ -47,7 +47,7 @@ module.exports = {
     try {
       const hnRejeitadas = await SolicitacaoHistoricoNotas.findAll({
         where: { estadoId: 3 },
-        order: [["id", "DESC"]],
+        order: [["createdAt", "DESC"]],
       });
       if (hnRejeitadas == 0) {
         return res.status(400).json({
