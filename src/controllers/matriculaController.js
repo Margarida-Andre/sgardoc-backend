@@ -60,7 +60,7 @@ module.exports = {
   async getMatricula(req, res) {
     try {
       const { id } = req.params;
-      const matricula = await Usuario.findOne({
+      const matricula = await Matricula.findOne({
         where: { id },
       });
       if (matricula == 0) {
