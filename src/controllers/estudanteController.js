@@ -24,7 +24,7 @@ module.exports = {
   async getEstudante(req, res) {
     try {
       const { id } = req.params;
-      const estudante = await Inscricao.findOne({
+      const estudante = await Estudante.findOne({
         where: { id },
       });
       if (estudante == 0) {
@@ -164,6 +164,7 @@ module.exports = {
 
       return res.json({
         estudanteCreate,
+        getMatricula,
         message:
           "Estudante criado com sucesso, um email como comprovativo foi enviado para o destinatário.",
       });
