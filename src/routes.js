@@ -234,6 +234,11 @@ routes.patch(
 //estudante
 routes.get("/estudanteAll", authUsuario, EstudanteController.getEstudantes);
 routes.get("/estudante/:id", authUsuario, EstudanteController.getEstudante);
+routes.get(
+  "/estudantesTurma/:turmaId",
+  authUsuario,
+  EstudanteController.getEstudantesByTurma
+);
 routes.post(
   "/estudanteCreate/:matriculaId",
   authUsuario,
