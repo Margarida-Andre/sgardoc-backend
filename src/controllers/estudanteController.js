@@ -1,6 +1,6 @@
 const Estudante = require("../models/Estudante");
 const Usuario = require("../models/Usuario");
-const Matricula = require("../models/Matricula");
+const Turma = require("../models/Turma");
 const transportador = require("../midlewares/confEnvioEmail");
 const { Op } = require("@sequelize/core");
 const dotenv = require("dotenv/config.js");
@@ -31,6 +31,30 @@ module.exports = {
         return res.status(400).json({ message: "Este estudante não existe" });
       }
       return res.json(estudante);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  async getEstudantesByTurma(req, res) {
+    try {
+      const { turmaId } = req.params;
+      const estudantesTurma = await Turma.findByPk(turmaId, {
+        include: [{ association: "estudante" }],
+        order: [["estudante", "createdAt", "ASC"]],
+      });
+
+      if (!estudantesTurma) {
+        return res.status(400).json({ message: "Esta turma não existe" });
+      }
+
+      if (estudantesTurma == 0) {
+        return res
+          .status(400)
+          .json({ message: "Não existe nenhum estudante nesta turma" });
+      }
+
+      return res.json(estudantesTurma);
     } catch (error) {
       res.json(error);
     }
