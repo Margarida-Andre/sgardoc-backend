@@ -67,6 +67,30 @@ class Estudante extends Model {
       foreignKey: "estudanteId",
       as: "solicitacaoDeclaracaoEstudos",
     });
+
+    this.hasMany(models.Estudante, {
+      foreignKey: "cursoId",
+      as: "estudante",
+    });
+
+    this.hasMany(models.PautaParcelar, {
+      foreignKey: "estudanteId",
+      as: "pautaParcelar",
+    });
+
+    this.hasMany(models.PautaExame, {
+      foreignKey: "estudanteId",
+      as: "pautaExame",
+    });
+
+    this.hasMany(models.PautaRecurso, {
+      foreignKey: "estudanteId",
+      as: "pautaRecurso",
+    });
+    this.hasMany(models.PautaRecuperacao, {
+      foreignKey: "estudanteId",
+      as: "pautaRecuperacao",
+    });
   }
 }
 
