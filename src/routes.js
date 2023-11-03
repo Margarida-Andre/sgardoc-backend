@@ -21,6 +21,8 @@ const SolicitacaoDeclaracaoEstudosController = require("./controllers/solicitaca
 const EfeitoDeclaracaoController = require("./controllers/efeitoDeclaracaoController");
 const TipoDeclaracaoController = require("./controllers/tipoDeclaracaoController");
 const DuracaoDeclaracaoController = require("./controllers/duracaoDeclaracaoController");
+const SemestreController = require("./controllers/semestreController");
+const DisciplinaController = require("./controllers/disciplinaController");
 
 const { authUsuario } = require("./midlewares/authUsuario");
 
@@ -395,6 +397,33 @@ routes.get(
   "/duracaoDeclaracao",
   authUsuario,
   DuracaoDeclaracaoController.getDuracaoDeclaracao
+);
+
+//Semestre
+routes.get("/semestreAll", authUsuario, SemestreController.getSemestres);
+
+//Disciplina
+routes.get("/disciplinaAll", authUsuario, DisciplinaController.getDisciplinas);
+routes.get("/disciplina/:id", authUsuario, DisciplinaController.getDisciplina);
+routes.get(
+  "/disciplinasByGrau/:id",
+  authUsuario,
+  DisciplinaController.getDisciplinasByGrauAcademico
+);
+routes.post(
+  "/disciplinaCreate",
+  authUsuario,
+  DisciplinaController.createDisciplina
+);
+routes.patch(
+  "/disciplinaUpdate/:id",
+  authUsuario,
+  DisciplinaController.updateDisciplina
+);
+routes.delete(
+  "/disciplinaDelete/:id",
+  authUsuario,
+  DisciplinaController.deleteDisciplina
 );
 
 module.exports = routes;

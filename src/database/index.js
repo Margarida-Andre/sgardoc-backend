@@ -22,6 +22,12 @@ const SolicitacaoDeclaracaoEstudos = require("../models/SolicitacaoDeclaracaoEst
 const DuracaoDeclaracao = require("../models/DuracaoDeclaracao");
 const TipoDeclaracao = require("../models/TipoDeclaracao");
 const EfeitoDeclaracao = require("../models/EfeitoDeclaracao");
+const Disciplina = require("../models/Disciplina");
+const Semestre = require("../models/Semestre");
+const PautaParcelar = require("../models/PautaParcelar");
+const PautaExame = require("../models/PautaExame");
+const PautaRecurso = require("../models/PautaRecurso");
+const PautaRecuperacao = require("../models/PautaRecuperacao");
 const connection = new Sequelize(dbConfig);
 
 //Connection
@@ -46,6 +52,12 @@ SolicitacaoDeclaracaoEstudos.init(connection);
 DuracaoDeclaracao.init(connection);
 TipoDeclaracao.init(connection);
 EfeitoDeclaracao.init(connection);
+Disciplina.init(connection);
+Semestre.init(connection);
+PautaParcelar.init(connection);
+PautaExame.init(connection);
+PautaRecurso.init(connection);
+PautaRecuperacao.init(connection);
 
 //Association
 Provincia.associate(connection.models);
@@ -69,5 +81,11 @@ SolicitacaoDeclaracaoEstudos.associate(connection.models);
 DuracaoDeclaracao.associate(connection.models);
 TipoDeclaracao.associate(connection.models);
 EfeitoDeclaracao.associate(connection.models);
+Disciplina.associate(connection.models);
+Semestre.associate(connection.models);
+PautaParcelar.associate(connection.models);
+PautaExame.associate(connection.models);
+PautaRecurso.associate(connection.models);
+PautaRecuperacao.associate(connection.models);
 
 module.exports = connection;
