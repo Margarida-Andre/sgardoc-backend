@@ -23,6 +23,10 @@ const TipoDeclaracaoController = require("./controllers/tipoDeclaracaoController
 const DuracaoDeclaracaoController = require("./controllers/duracaoDeclaracaoController");
 const SemestreController = require("./controllers/semestreController");
 const DisciplinaController = require("./controllers/disciplinaController");
+const PautaParcelarController = require("./controllers/pautaParcelarController");
+const PautaExameController = require("./controllers/pautaExameController");
+const PautaRecursoController = require("./controllers/pautaRecursoController");
+const PautaRecuperacaoController = require("./controllers/pautaRecuperacaoController");
 
 const { authUsuario } = require("./midlewares/authUsuario");
 
@@ -406,7 +410,7 @@ routes.get("/semestreAll", authUsuario, SemestreController.getSemestres);
 routes.get("/disciplinaAll", authUsuario, DisciplinaController.getDisciplinas);
 routes.get("/disciplina/:id", authUsuario, DisciplinaController.getDisciplina);
 routes.get(
-  "/disciplinasByGrau/:id",
+  "/disciplinasByGrau/:grauAcademicoId",
   authUsuario,
   DisciplinaController.getDisciplinasByGrauAcademico
 );
@@ -424,6 +428,126 @@ routes.delete(
   "/disciplinaDelete/:id",
   authUsuario,
   DisciplinaController.deleteDisciplina
+);
+
+//PautaParcelar
+routes.get("/pautaParcelarAll", authUsuario, PautaParcelarController.getPautas);
+routes.get("/pautaParcelar", authUsuario, PautaParcelarController.getPauta);
+routes.get(
+  "/pautaParcelarBydisciplina/:disciplinaId",
+  authUsuario,
+  PautaParcelarController.getPautaByDisciplina
+);
+routes.get(
+  "/pautaParcelarByestudante/:estudanteId",
+  authUsuario,
+  PautaParcelarController.getPautaByEstudante
+);
+routes.post(
+  "/pautaParcelarCreate",
+  authUsuario,
+  PautaParcelarController.createPauta
+);
+routes.patch(
+  "/pautaParcelarUpdate/:id",
+  authUsuario,
+  PautaParcelarController.updatePauta
+);
+routes.delete(
+  "/pautaParcelarDelete/:id",
+  authUsuario,
+  PautaParcelarController.deletePauta
+);
+
+//PautaExame
+routes.get("/pautaExameAll", authUsuario, PautaExameController.getPautas);
+routes.get("/pautaExame", authUsuario, PautaExameController.getPauta);
+routes.get(
+  "/pautaExameBydisciplina/:disciplinaId",
+  authUsuario,
+  PautaExameController.getPautaByDisciplina
+);
+routes.get(
+  "/pautaExameByestudante/:estudanteId",
+  authUsuario,
+  PautaExameController.getPautaByEstudante
+);
+routes.post("/pautaExameCreate", authUsuario, PautaExameController.createPauta);
+routes.patch(
+  "/pautaExameUpdate/:id",
+  authUsuario,
+  PautaExameController.updatePauta
+);
+routes.delete(
+  "/pautaExameDelete/:id",
+  authUsuario,
+  PautaExameController.deletePauta
+);
+
+//PautaRecurso
+routes.get("/pautaRecursoAll", authUsuario, PautaRecursoController.getPautas);
+routes.get("/pautaRecurso", authUsuario, PautaRecursoController.getPauta);
+routes.get(
+  "/pautaRecursoBydisciplina/:disciplinaId",
+  authUsuario,
+  PautaRecursoController.getPautaByDisciplina
+);
+routes.get(
+  "/pautaRecursoByestudante/:estudanteId",
+  authUsuario,
+  PautaRecursoController.getPautaByEstudante
+);
+routes.post(
+  "/pautaRecursoCreate",
+  authUsuario,
+  PautaRecursoController.createPauta
+);
+routes.patch(
+  "/pautaRecursoUpdate/:id",
+  authUsuario,
+  PautaRecursoController.updatePauta
+);
+routes.delete(
+  "/pautaRecursoDelete/:id",
+  authUsuario,
+  PautaRecursoController.deletePauta
+);
+
+//PautaRecuperacao
+routes.get(
+  "/pautaRecuperacaoAll",
+  authUsuario,
+  PautaRecuperacaoController.getPautas
+);
+routes.get(
+  "/pautaRecuperacao",
+  authUsuario,
+  PautaRecuperacaoController.getPauta
+);
+routes.get(
+  "/pautaRecuperacaoBydisciplina/:disciplinaId",
+  authUsuario,
+  PautaRecuperacaoController.getPautaByDisciplina
+);
+routes.get(
+  "/pautaRecuperacaoByestudante/:estudanteId",
+  authUsuario,
+  PautaRecuperacaoController.getPautaByEstudante
+);
+routes.post(
+  "/pautaRecuperacaoCreate",
+  authUsuario,
+  PautaRecuperacaoController.createPauta
+);
+routes.patch(
+  "/pautaRecuperacaoUpdate/:id",
+  authUsuario,
+  PautaRecuperacaoController.updatePauta
+);
+routes.delete(
+  "/pautaRecuperacaoDelete/:id",
+  authUsuario,
+  PautaRecursoController.deletePauta
 );
 
 module.exports = routes;
