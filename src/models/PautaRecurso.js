@@ -12,6 +12,7 @@ class PautaRecurso extends Model {
         disciplinaId: DataTypes.UUIDV4,
         criadoPor: DataTypes.STRING,
         actualizadoPor: DataTypes.STRING,
+        observacao: DataTypes.STRING,
       },
       {
         sequelize,

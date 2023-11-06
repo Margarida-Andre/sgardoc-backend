@@ -96,6 +96,7 @@ module.exports = {
         disciplinaId,
         criadoPor,
         actualizadoPor,
+        observacao,
       } = req.body;
 
       const pautaCreate = await Pauta.create({
@@ -108,6 +109,7 @@ module.exports = {
         disciplinaId,
         criadoPor,
         actualizadoPor,
+        observacao,
       });
       return res.json(pautaCreate);
     } catch (error) {
@@ -128,6 +130,7 @@ module.exports = {
         disciplinaId,
         criadoPor,
         actualizadoPor,
+        observacao,
       } = req.body;
 
       const pautaUpdate = await Pauta.update(
@@ -141,6 +144,7 @@ module.exports = {
           disciplinaId,
           criadoPor,
           actualizadoPor,
+          observacao,
         },
         { where: { id } }
       );
