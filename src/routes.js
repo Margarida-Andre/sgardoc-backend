@@ -432,7 +432,7 @@ routes.delete(
 
 //PautaParcelar
 routes.get("/pautaParcelarAll", authUsuario, PautaParcelarController.getPautas);
-routes.get("/pautaParcelar", authUsuario, PautaParcelarController.getPauta);
+routes.get("/pautaParcelar/:id", authUsuario, PautaParcelarController.getPauta);
 routes.get(
   "/pautaParcelarBydisciplina/:disciplinaId",
   authUsuario,
@@ -461,7 +461,7 @@ routes.delete(
 
 //PautaExame
 routes.get("/pautaExameAll", authUsuario, PautaExameController.getPautas);
-routes.get("/pautaExame", authUsuario, PautaExameController.getPauta);
+routes.get("/pautaExame/:id", authUsuario, PautaExameController.getPauta);
 routes.get(
   "/pautaExameBydisciplina/:disciplinaId",
   authUsuario,
@@ -486,7 +486,7 @@ routes.delete(
 
 //PautaRecurso
 routes.get("/pautaRecursoAll", authUsuario, PautaRecursoController.getPautas);
-routes.get("/pautaRecurso", authUsuario, PautaRecursoController.getPauta);
+routes.get("/pautaRecurso/:id", authUsuario, PautaRecursoController.getPauta);
 routes.get(
   "/pautaRecursoBydisciplina/:disciplinaId",
   authUsuario,
@@ -520,7 +520,7 @@ routes.get(
   PautaRecuperacaoController.getPautas
 );
 routes.get(
-  "/pautaRecuperacao",
+  "/pautaRecuperacao/:id",
   authUsuario,
   PautaRecuperacaoController.getPauta
 );
