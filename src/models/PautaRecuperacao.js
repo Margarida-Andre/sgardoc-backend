@@ -16,7 +16,7 @@ class PautaRecuperacao extends Model {
       },
       {
         sequelize,
-        tableName: "pautaRecuperacao",
+        tableName: "pautaExameEspecial",
       }
     );
   }
