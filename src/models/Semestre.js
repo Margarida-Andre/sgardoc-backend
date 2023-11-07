@@ -39,7 +39,7 @@ class Semestre extends Model {
 
     this.hasMany(models.PautaRecuperacao, {
       foreignKey: "semestreId",
-      as: "pautaRecuperacao",
+      as: "pautaExameEspecial",
     });
   }
 }

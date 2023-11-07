@@ -7,9 +7,9 @@ module.exports = {
     try {
       const pauta = await Pauta.findAll();
       if (pauta == 0) {
-        return res
-          .status(400)
-          .json({ message: "Não existe nenhuma informação na pauta parcelar" });
+        return res.status(400).json({
+          message: "Não existe nenhuma informação na pauta de recuperação",
+        });
       }
       return res.json(pauta);
     } catch (error) {
@@ -39,7 +39,7 @@ module.exports = {
       const { disciplinaId } = req.params;
       const pautaDisciplina = await Disciplina.findByPk(disciplinaId, {
         include: {
-          association: "pautaRecuperacao",
+          association: "pautaExameEspecial",
         },
       });
 
@@ -64,7 +64,7 @@ module.exports = {
       const { estudanteId } = req.params;
       const pautaEstudante = await Estudante.findByPk(estudanteId, {
         include: {
-          association: "pautaRecuperacao",
+          association: "pautaExameEspecial",
         },
       });
 

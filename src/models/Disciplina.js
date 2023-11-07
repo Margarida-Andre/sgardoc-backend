@@ -45,7 +45,7 @@ class Disciplina extends Model {
 
     this.hasMany(models.PautaRecuperacao, {
       foreignKey: "disciplinaId",
-      as: "pautaRecuperacao",
+      as: "pautaExameEspecial",
     });
   }
 }

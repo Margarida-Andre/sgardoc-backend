@@ -89,7 +89,7 @@ class Estudante extends Model {
     });
     this.hasMany(models.PautaRecuperacao, {
       foreignKey: "estudanteId",
-      as: "pautaRecuperacao",
+      as: "pautaExameEspecial",
     });
   }
 }

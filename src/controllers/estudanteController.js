@@ -1,4 +1,5 @@
 const Estudante = require("../models/Estudante");
+const Matricula = require("../models/Matricula");
 const Usuario = require("../models/Usuario");
 const Turma = require("../models/Turma");
 const transportador = require("../midlewares/confEnvioEmail");
