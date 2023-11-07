@@ -125,6 +125,83 @@ module.exports = {
         criadoPor,
         actualizadoPor,
       });
+      if (estadoId === 2) {
+        const getEstudante = await Estudante.findByPk(estudanteId, {
+          where: { estudanteId },
+          include: [
+            { association: "matricula", attributes: ["nome"] },
+            { association: "grauAcademico", attributes: ["grau"] },
+            { association: "curso", attributes: ["designacao"] },
+            { association: "usuario", attributes: ["email"] },
+          ],
+        });
+
+        const getLenghtHN = await SolicitacaoDeclaracaoEstudos.findAll();
+        let date_ob = new Date();
+
+        document.rect(25, 30, 170, 45);
+        document.setFontSize(13);
+        document.text(
+          30,
+          20,
+          "\n" +
+            "INSTITUTO DE TECNOLOGIAS DE INFORMAÇÃO E COMUNICAÇÃO" +
+            "\n" +
+            "\n" +
+            "SOLICITAÇÃO DE DECLARAÇÃO DE ESTUDOS Nº " +
+            (getLenghtHN.length + 1) +
+            "\n" +
+            "Nome: " +
+            getEstudante.matricula.nome +
+            "\n" +
+            "Curso: " +
+            getEstudante.curso.designacao +
+            "\n" +
+            "Processo: " +
+            getEstudante.numeroProcesso +
+            "\n" +
+            "Ano: " +
+            getEstudante.grauAcademico.grau +
+            "º" +
+            "\n" +
+            "Data: " +
+            date_ob.getDate() +
+            "/" +
+            (date_ob.getMonth() + 1) +
+            "/" +
+            date_ob.getFullYear() +
+            "\n" +
+            "Funcionário: " +
+            criadoPor
+        );
+        document.setFontSize(13);
+
+        const envioEmail = {
+          from: process.env.EMAIL,
+          to: getEstudante.usuario.email,
+          subject: "SOLICITAÇÃO DE DECLARAÇÃO DE ESTUDOS INSTIC 🎓",
+          text:
+            "Você fez uma solicitação de declaração de estudos no INSTIC" +
+            "\n" +
+            "Faça o carregamento do comprovativo abaixo:" +
+            "\n",
+          attachments: [
+            {
+              filename: "Declaração_de_estudos.pdf",
+              content: Buffer.from(document.output("arraybuffer")),
+            },
+          ],
+        };
+
+        transportador.sendMail(envioEmail, (err) => {
+          if (err) {
+            return res.status(400).json({
+              error: "Ocorreu um error ao enviar email para o estudante" + err,
+            });
+          }
+          console.log("Email enviado com sucesso");
+        });
+      }
       return res.json({
         solicitacaoCreate,
         message:

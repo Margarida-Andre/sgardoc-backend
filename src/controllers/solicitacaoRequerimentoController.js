@@ -118,6 +118,35 @@ module.exports = {
         criadoPor,
         actualizadoPor,
       });
+      if (estadoId === 2) {
+        const getEstudante = await Estudante.findByPk(estudanteId, {
+          where: { estudanteId },
+          include: [
+            { association: "matricula", attributes: ["nome"] },
+            { association: "grauAcademico", attributes: ["grau"] },
+            { association: "curso", attributes: ["designacao"] },
+            { association: "usuario", attributes: ["email"] },
+          ],
+        });
+
+        const envioEmail = {
+          from: process.env.EMAIL,
+          to: getEstudante.usuario.email,
+          subject: "ENTRADA DE REQUERIMENTO INSTIC 🎓",
+          text:
+            "Você deu entrada à um requerimento no INSTIC. Por favor, aguarde! Brevemente daremos um retorno." +
+            "\n",
+        };
+
+        transportador.sendMail(envioEmail, (err) => {
+          if (err) {
+            return res.status(400).json({
+              error: "Ocorreu um error ao enviar email para o estudante" + err,
+            });
+          }
+          console.log("Email enviado com sucesso");
+        });
+      }
       return res.json({
         solicitacaoCreate,
         message:

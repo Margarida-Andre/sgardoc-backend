@@ -285,7 +285,12 @@ routes.get(
 routes.get(
   "/historicoNotas/:id",
   authUsuario,
-  SolicitacaoHistoricoNotasController.getHistoricoNotas
+  SolicitacaoHistoricoNotasController.getHistoricoNota
+);
+routes.get(
+  "/historicoNotasAll",
+  authUsuario,
+  SolicitacaoHistoricoNotasController.getSolicitacaoHistoricoNotas
 );
 routes.post(
   "/solicitacaohnCreate",
@@ -350,6 +355,11 @@ routes.get(
   "/declaracaoAll",
   authUsuario,
   SolicitacaoDeclaracaoEstudosController.getSolicitacaoDeclaracaoEstudos
+);
+routes.get(
+  "/declaracao/:id",
+  authUsuario,
+  SolicitacaoDeclaracaoEstudosController.getDeclaracaoEstudos
 );
 routes.get(
   "/declaracaoPendentes",
