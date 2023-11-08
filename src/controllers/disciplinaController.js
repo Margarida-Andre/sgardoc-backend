@@ -1,5 +1,6 @@
 const Disciplina = require("../models/Disciplina");
 const GrauAcademico = require("../models/GrauAcademico");
+const { Op } = require("@sequelize/core");
 
 module.exports = {
   async getDisciplinas(req, res) {
@@ -47,11 +48,9 @@ module.exports = {
       }
 
       if (disciplinasGrau == 0) {
-        return res
-          .status(400)
-          .json({
-            message: "Não existe nenhuma disciplina neste grau acadêmico",
-          });
+        return res.status(400).json({
+          message: "Não existe nenhuma disciplina neste grau acadêmico",
+        });
       }
 
       return res.json(disciplinasGrau);
@@ -114,11 +113,6 @@ module.exports = {
         criadoPor,
         actualizadoPor,
       } = req.body;
-
-      const cursoInexistente = await Disciplina.findByPk(id);
-      if (!cursoInexistente) {
-        return res.status(400).json({ message: "Esta disciplina não existe" });
-      }
 
       const disciplinaDesignacao = await Disciplina.findOne({
         where: { id: { [Op.ne]: req.params.id }, designacao },
