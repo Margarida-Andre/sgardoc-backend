@@ -29,7 +29,11 @@ module.exports = {
         // { expiresIn: 3600 }
       );
 
-      return res.json({ auth: true, token: token, usuario: usuario.nome });
+      return res.json({
+        auth: true,
+        token: token,
+        usuario: usuario.nome,
+      });
     } catch (error) {
       res.json(error);
     }

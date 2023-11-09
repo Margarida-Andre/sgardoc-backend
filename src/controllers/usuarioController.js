@@ -8,6 +8,7 @@ module.exports = {
     try {
       const usuario = await Usuario.findAll({
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
       if (usuario == 0) {
         return res.status(400).json({ message: "Não existe nenhum usuário" });

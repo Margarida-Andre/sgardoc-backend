@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv/config.js");
 
-const transportador  = nodemailer.createTransport({
+const transportador = nodemailer.createTransport({
   host: "smtp.gmail.com",
   service: "smtp.gmail.com",
   secure: true,
@@ -9,6 +9,6 @@ const transportador  = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
-})
+});
 
 module.exports = transportador;

@@ -5,7 +5,7 @@ const Estudante = require("../models/Estudante");
 module.exports = {
   async getPautas(req, res) {
     try {
-      const pauta = await Pauta.findAll();
+      const pauta = await Pauta.findAll({ include: { all: true } });
       if (pauta == 0) {
         return res
           .status(400)

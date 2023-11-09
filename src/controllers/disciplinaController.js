@@ -5,7 +5,10 @@ const { Op } = require("@sequelize/core");
 module.exports = {
   async getDisciplinas(req, res) {
     try {
-      const disciplina = await Disciplina.findAll();
+      const disciplina = await Disciplina.findAll({
+        order: [["createdAt", "DESC"]],
+        include: { all: true },
+      });
       if (disciplina == 0) {
         return res
           .status(400)
