@@ -12,6 +12,7 @@ module.exports = {
     try {
       const estudante = await Estudante.findAll({
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
       if (!estudante) {
         return res.json({ message: "Não existe nenhum estudante na lista" });

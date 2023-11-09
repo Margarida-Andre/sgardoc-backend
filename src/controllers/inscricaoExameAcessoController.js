@@ -1,5 +1,9 @@
 const Inscricao = require("../models/InscricaoExameAcesso");
 const { Op } = require("@sequelize/core");
+const transportador = require("../midlewares/confEnvioEmail");
+const document = require("../midlewares/jsPdf");
+const dotenv = require("dotenv/config.js");
+const { Buffer } = require("node:buffer");
 
 module.exports = {
   async getInscricoesPendentes(req, res) {
@@ -7,6 +11,7 @@ module.exports = {
       const inscricoesPendentes = await Inscricao.findAll({
         where: { estadoId: 1 },
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
 
       return res.json(inscricoesPendentes);
@@ -20,6 +25,7 @@ module.exports = {
       const inscricoesAprovadas = await Inscricao.findAll({
         where: { estadoId: 2 },
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
 
       return res.json(inscricoesAprovadas);
@@ -33,6 +39,7 @@ module.exports = {
       const inscricoesRejeitadas = await Inscricao.findAll({
         where: { estadoId: 3 },
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
 
       return res.json(inscricoesRejeitadas);
@@ -45,6 +52,7 @@ module.exports = {
     try {
       const inscricaoAll = await Inscricao.findAll({
         order: [["createdAt", "DESC"]],
+        include: { all: true },
       });
       if (inscricaoAll == 0) {
         return res
@@ -161,6 +169,77 @@ module.exports = {
         criadoPor,
         actualizadoPor,
       });
+
+      const getInscricao = await Inscricao.findByPk(inscricaoCreate.id, {
+        where: inscricaoCreate.id,
+        include: [{ association: "curso", attributes: ["designacao"] }],
+      });
+      const getLenghtInscricao = await Inscricao.findAll();
+
+      let date_ob = new Date();
+      document.rect(25, 30, 170, 45);
+      document.setFontSize(13);
+      document.text(
+        30,
+        20,
+        "\n" +
+          "INSTITUTO DE TECNOLOGIAS DE INFORMAÇÃO E COMUNICAÇÃO" +
+          "\n" +
+          "\n" +
+          "INSCRIÇÃO DE EXAME DE ACCESSO Nº " +
+          (getLenghtInscricao.length + 1) +
+          "\n" +
+          "Nome: " +
+          nome +
+          "\n" +
+          "Opção do curso 1: " +
+          getInscricao.curso.designacao +
+          "\n" +
+          "Opção do curso 2: " +
+          getInscricao.curso.designacao +
+          "\n" +
+          "Data: " +
+          date_ob.getDate() +
+          "/" +
+          (date_ob.getMonth() + 1) +
+          "/" +
+          date_ob.getFullYear() +
+          "\n" +
+          "Funcionário: " +
+          criadoPor
+      );
+      document.setFontSize(13);
+
+      const envioEmail = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "SOLICITAÇÃO DE PLANO CURRICULAR INSTIC 🎓",
+        text:
+          "Parabéns, você acabou de inscrever-se no INSTIC" +
+          "\n" +
+          "Reserve seu código da inscrição caso necessite efectuar uma matrícula: " +
+          inscricaoCreate.id +
+          "\n" +
+          "Faça o carregamento do comprovativo abaixo:" +
+          "\n",
+
+        attachments: [
+          {
+            filename: "Inscrição_de_Exame_de_Acesso.pdf",
+            content: Buffer.from(document.output("arraybuffer")),
+          },
+        ],
+      };
+
+      transportador.sendMail(envioEmail, (err) => {
+        if (err) {
+          return res.status(400).json({
+            error: "Ocorreu um error ao enviar email para o estudante" + err,
+          });
+        }
+        console.log("Email enviado com sucesso");
+      });
+
       return res.json({
         inscricaoCreate,
         message: "Inscrição feita com sucesso",

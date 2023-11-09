@@ -101,6 +101,7 @@ module.exports = {
     try {
       const turma = await Turma.findAll({
         order: [["designacao", "ASC"]],
+        include: { all: true },
       });
       if (turma == 0) {
         return res.status(400).json({ message: "Não existe nenhuma turma" });
